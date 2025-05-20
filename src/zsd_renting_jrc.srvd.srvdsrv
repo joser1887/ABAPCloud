@@ -1,0 +1,5 @@
+@EndUserText.label: 'Renting'
+define service ZSD_RENTING_jrc {
+  expose Z_I_RENTING_JRC      as Cars;
+  expose z_b_det_customer_jrc as Customer;
+}
