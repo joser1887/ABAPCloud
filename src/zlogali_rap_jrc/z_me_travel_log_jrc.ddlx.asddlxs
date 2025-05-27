@@ -1,0 +1,85 @@
+@Metadata.layer: #CORE
+
+@Search.searchable: true
+
+@UI.headerInfo: { typeName:       'Travel',
+                  typeNamePlural: 'Travels',
+                  title:          { type:  #STANDARD,
+                                    value: 'TravelId' } }
+
+annotate entity Z_C_TRAVEL_LOG_jrc with
+
+{
+  @Search.defaultSearchElement: true
+  @UI.facet: [ { id:       'Travel',
+                 purpose:  #STANDARD,
+                 type:     #IDENTIFICATION_REFERENCE,
+                 label:    'Travel',
+                 position: 10 },
+               { id:            'Booking',
+                 purpose:       #STANDARD,
+                 type:          #LINEITEM_REFERENCE,
+                 label:         'Booking',
+                 position:      20,
+                 targetElement: '_Booking' } ]
+  @UI.identification: [ { position: 10,
+                          label:    'Travel ID [1,...99999999]' } ]
+  @UI.lineItem: [ { position:   10,
+                    importance: #HIGH } ]
+  TravelId;
+
+  @Consumption.valueHelpDefinition: [ { entity: { name:    '/DMO/I_Agency',
+                                                  element: 'AgenciID' } } ]
+  @UI.lineItem: [ { position:   20,
+                    importance: #HIGH } ]
+  @UI.identification: [ { position: 20 } ]
+  @UI.selectionField: [ { position: 20 } ]
+  AgencyId;
+
+  @Consumption.valueHelpDefinition: [ { entity: { name:    '/DMO/I_Customer',
+                                                  element: 'CustomerID' } } ]
+  @Search.defaultSearchElement: true
+  @UI.identification: [ { position: 30 } ]
+  @UI.lineItem: [ { position:   30,
+                    importance: #HIGH } ]
+  @UI.selectionField: [ { position: 30 } ]
+  CustomerId;
+
+  @UI.identification: [ { position: 40 } ]
+  @UI.lineItem: [ { position:   40,
+                    importance: #MEDIUM } ]
+  BeginDate;
+
+  @UI.identification: [ { position: 41 } ]
+  @UI.lineItem: [ { position:   41,
+                    importance: #MEDIUM } ]
+  EndDate;
+
+  @UI.identification: [ { position: 42 } ]
+  BookingFee;
+
+  @UI.identification: [ { position: 43,
+                          label:    'Total Price' } ]
+  @UI.lineItem: [ { position:   43,
+                    importance: #MEDIUM } ]
+  TotalPrice;
+
+  @Consumption.valueHelpDefinition: [ { entity: { name:    'I_Currency',
+                                                  element: 'Currency' } } ]
+  CurrencyCode;
+
+  @UI.identification: [ { position: 46 } ]
+  Description;
+
+  @UI.identification: [ { position: 45,
+                          label:    'Status [O(Open)|A(Accepted)|X(Canceled)]' } ]
+  @UI.lineItem: [ { position:   50,
+                    importance: #HIGH },
+                  { type:       #FOR_ACTION,
+                    dataAction: 'createTravelByTemplate',
+                    label:      'Create Travel by Template' } ]
+  TravelStatus;
+
+  @UI.hidden: true
+  LastChangedAt;
+}

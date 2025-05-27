@@ -14,4 +14,7 @@ annotate view z_b_det_customer_jrc with
 
   @UI.lineItem: [ { position: 40, importance: #HIGH, label: 'Tipo de Contrato' } ]
   TipoContrato;
+  
+  @UI.lineItem: [ { position: 50, importance: #HIGH, label: 'Matricula' } ]
+  Matricula;
 }

@@ -1,0 +1,5 @@
+@EndUserText.label: 'Defincion de WS para la Libreria'
+define service ZSD_DATA_LIBROS_JRC {
+  expose Z_I_DATA_LIBROS  as Libros;
+  expose Z_B_CLNTS_LIB_JR as Clientes;
+}

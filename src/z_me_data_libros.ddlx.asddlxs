@@ -1,0 +1,81 @@
+@Metadata.layer: #CORE
+
+@Search.searchable: true
+
+@UI.headerInfo: { typeName:       'Libro',
+                  typeNamePlural: 'Libros',
+                  imageUrl:       'Imagen',
+                  title:          { type:  #STANDARD,
+                                    value: 'Titulo',
+                                    label: 'Libro' } }
+
+annotate entity Z_I_DATA_LIBROS
+    with
+
+{
+  @UI.facet: [ { id:       'Libro',
+                 purpose:  #STANDARD,
+                 type:     #IDENTIFICATION_REFERENCE,
+                 label:    'Libro',
+                 position: 10 },
+               { id:            'Cliente',
+                 purpose:       #STANDARD,
+                 type:          #LINEITEM_REFERENCE,
+                 label:         'Clientes',
+                 position:      20,
+                 targetElement: '_CLI_VEN' } ]
+  IdLibro;
+
+  @Search.defaultSearchElement: true
+  @UI.identification: [ { position: 10 } ]
+  @UI.lineItem: [ { position:   10,
+                    importance: #HIGH } ]
+  @UI.selectionField: [ { position: 10 } ]
+  Titulo;
+
+  @Consumption.valueHelpDefinition: [ { entity: { name:    'Z_B_ACC_CATEG_JRC',
+                                                  element: 'BiCateg' } } ]
+  @UI.identification: [ { position: 20 } ]
+  @UI.lineItem: [ { position:   30,
+                    importance: #LOW } ]
+  @UI.selectionField: [ { position: 30 } ]
+  BiCateg;
+
+  @UI.identification: [ { position: 30 } ]
+  @UI.lineItem: [ { position:   40,
+                    importance: #HIGH } ]
+  Autor;
+
+  @Search.defaultSearchElement: true
+  @UI.identification: [ { position: 40 } ]
+  @UI.lineItem: [ { position:   50,
+                    importance: #LOW } ]
+  @UI.selectionField: [ { position: 20 } ]
+  Editorial;
+
+  @UI.identification: [ { position: 50 } ]
+  @UI.lineItem: [ { position:   60,
+                    importance: #LOW } ]
+  Idioma;
+
+  @UI.identification: [ { position: 60 } ]
+  Paginas;
+
+  @UI.identification: [ { position: 70 } ]
+  @UI.lineItem: [ { position:   70,
+                    importance: #HIGH } ]
+  Precio;
+
+  @UI.identification: [ { position: 80 } ]
+  Moneda;
+
+  @UI.identification: [ { position: 90 } ]
+
+  Formato;
+
+  @UI.lineItem: [ { position:    90,
+                    importance:  #HIGH,
+                    label:       'Estado Ventas',
+                    criticality: 'Ventas' } ]
+  Estado;
+}

@@ -1,0 +1,69 @@
+@Metadata.layer: #CORE
+
+@Search.searchable: true
+
+@UI.headerInfo: { typeName:       'Booking',
+                  typeNamePlural: 'Bookings',
+                  title:          { type:  #STANDARD,
+                                    value: 'BookingID' } }
+
+annotate entity Z_C_ABOOKING_LOG_JRC with
+
+{
+  @Search.defaultSearchElement: true
+  @UI.facet: [ { id:       'Booking',
+                 purpose:  #STANDARD,
+                 type:     #IDENTIFICATION_REFERENCE,
+                 label:    'Booking',
+                 position: 10 } ]
+  TravelId;
+
+  @Search.defaultSearchElement: true
+  @UI.identification: [ { position: 20 } ]
+  @UI.lineItem: [ { position:   20,
+                    importance: #HIGH } ]
+  BookingId;
+
+  @UI.identification: [ { position: 30 } ]
+  @UI.lineItem: [ { position:   30,
+                    importance: #HIGH } ]
+  BookingDate;
+
+  @Search.defaultSearchElement: true
+  @UI.identification: [ { position: 40 } ]
+  @UI.lineItem: [ { position:   40,
+                    importance: #HIGH } ]
+  @UI.selectionField: [ { position: 10 } ]
+  CustomerId;
+
+  @UI.identification: [ { position: 50 } ]
+  @UI.lineItem: [ { position:   50,
+                    importance: #HIGH } ]
+  CarrierId;
+
+  @UI.identification: [ { position: 60 } ]
+  @UI.lineItem: [ { position:   60,
+                    importance: #HIGH } ]
+  ConnectionId;
+
+  @UI.identification: [ { position: 70 } ]
+  @UI.lineItem: [ { position:   70,
+                    importance: #HIGH } ]
+  FlightDate;
+
+  @UI.identification: [ { position: 80 } ]
+  @UI.lineItem: [ { position:   80,
+                    importance: #HIGH } ]
+  FlightPrice;
+
+  @UI.identification: [ { position: 90,
+                          label:    'Status [N(New)| X(Canceled)| B(Booked)]' } ]
+  @UI.lineItem: [ { position:   90,
+                    importance: #HIGH,
+                    label:      'Status' } ]
+  BookingStatus;
+
+  /* Admininstrative fields */
+  @UI.hidden: true
+  LastChangeAt;
+}

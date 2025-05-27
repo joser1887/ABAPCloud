@@ -42,6 +42,7 @@ annotate view Z_I_RENTING_JRC
                  targetElement: '_DetCustomer',
                  position: 20 } ]
   @UI.fieldGroup: [ { qualifier: 'DetallesVehiculo', position: 10 } ]
+  @UI.lineItem: [ { position: 100, importance: #HIGH } ]
   Matricula;
 
   @Consumption.valueHelpDefinition: [ { entity: { name: 'Z_B_BRANDS_JRC', element: 'Marca' } } ]
