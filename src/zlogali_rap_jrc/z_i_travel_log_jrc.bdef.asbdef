@@ -20,8 +20,7 @@ etag master last_changed_at
   // validations
   validation validateCustomer on save { create; field customer_id; }
   validation validateDates on save { create; field begin_date, end_date; }
-  validation validateStatus on save
-  { create; field overall_status; }
+  validation validateStatus on save { create; field overall_status; }
   //actions
   action ( features : instance ) acceptTravel result [1] $self;
   action ( features : instance ) rejectTravel result [1] $self;

@@ -1,6 +1,5 @@
 @Metadata.layer: #CORE
 
-@Search.searchable: true
 
 @UI.headerInfo: { typeName:       'Booking Supplement',
                   typeNamePlural: 'Booking Supplements',
@@ -12,7 +11,7 @@ annotate view Z_C_BOOKSUPPL_LOG_JRC
     with
 
 {
-  @Search.defaultSearchElement: true
+  
   @UI.facet: [ { id:       'BookingSupplement',
                  purpose:  #STANDARD,
                  type:     #IDENTIFICATION_REFERENCE,
@@ -20,20 +19,15 @@ annotate view Z_C_BOOKSUPPL_LOG_JRC
                  position: 10 } ]
   TravelID;
 
-  @Search.defaultSearchElement: true
-  BookingID;
+   
+//  BookingID;
 
   @UI.identification: [ { position: 10 } ]
   @UI.lineItem: [ { position:   10,
                     importance: #HIGH } ]
   BookingSupplementID;
 
-  @Consumption.valueHelpDefinition: [ { entity:            { name:    '/DMO/I_SUPPLEMENT',
-                                                             element: 'SupplementID' },
-                                        additionalBinding: [ { localElement: 'Price',
-                                                               element:      'Price' },
-                                                             { localElement: 'CurrencyCode',
-                                                               element:      'CurrencyCode' } ] } ]
+  
   @UI.identification: [ { position: 20 } ]
   @UI.lineItem: [ { position:   20,
                     importance: #HIGH } ]
@@ -44,9 +38,9 @@ annotate view Z_C_BOOKSUPPL_LOG_JRC
                     importance: #HIGH } ]
   Price;
 
-  @Consumption.valueHelpDefinition: [ { entity: { name:    'I_Currency',
-                                                  element: 'Currency' } } ]
-  CurrencyCode;
+//  @Consumption.valueHelpDefinition: [ { entity: { name:    'I_Currency',
+//                                                  element: 'Currency' } } ]
+//  CurrencyCode;
 
   @UI.hidden: true
   LastChangedAt;

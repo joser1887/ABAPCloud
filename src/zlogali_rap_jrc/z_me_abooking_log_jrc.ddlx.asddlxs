@@ -1,6 +1,6 @@
 @Metadata.layer: #CORE
 
-@Search.searchable: true
+
 
 @UI.headerInfo: { typeName:       'Booking',
                   typeNamePlural: 'Bookings',
@@ -10,7 +10,7 @@
 annotate entity Z_C_ABOOKING_LOG_JRC with
 
 {
-  @Search.defaultSearchElement: true
+ 
   @UI.facet: [ { id:       'Booking',
                  purpose:  #STANDARD,
                  type:     #IDENTIFICATION_REFERENCE,
@@ -18,7 +18,7 @@ annotate entity Z_C_ABOOKING_LOG_JRC with
                  position: 10 } ]
   TravelID;
 
-  @Search.defaultSearchElement: true
+  
   @UI.identification: [ { position: 20 } ]
   @UI.lineItem: [ { position:   20,
                     importance: #HIGH } ]
@@ -29,7 +29,7 @@ annotate entity Z_C_ABOOKING_LOG_JRC with
                     importance: #HIGH } ]
   BookingDate;
 
-  @Search.defaultSearchElement: true
+  
   @UI.identification: [ { position: 40 } ]
   @UI.lineItem: [ { position:   40,
                     importance: #HIGH } ]

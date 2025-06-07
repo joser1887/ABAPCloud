@@ -1,7 +1,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 
 @EndUserText.label: 'Consumption - Booking Supplement'
-
+@Search.searchable: true
 @Metadata.allowExtensions: true
 
 define view entity Z_C_BOOKSUPPL_LOG_JRC
@@ -9,7 +9,14 @@ define view entity Z_C_BOOKSUPPL_LOG_JRC
 
 {
   key travel_id                   as TravelID,
+  @Search.defaultSearchElement: true
   key booking_id                  as BookingID,
+  @Consumption.valueHelpDefinition: [ { entity:            { name:    '/DMO/I_SUPPLEMENT',
+                                                             element: 'SupplementID' },
+                                        additionalBinding: [ { localElement: 'Price',
+                                                               element:      'Price' },
+                                                             { localElement: 'CurrencyCode',
+                                                               element:      'CurrencyCode' } ] } ]
   key booking_supplement_id       as BookingSupplementID,
 
       @ObjectModel.text.element: [ 'SupplementDescription' ]
@@ -21,6 +28,8 @@ define view entity Z_C_BOOKSUPPL_LOG_JRC
       price                       as Price,
 
       @Semantics.currencyCode: true
+      @Consumption.valueHelpDefinition: [ { entity: { name:    'I_Currency',
+                                                  element: 'Currency' } } ]
       currency                    as CurrencyCode,
 
       last_changed_at             as LastChangedAt,

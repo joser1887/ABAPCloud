@@ -1,6 +1,5 @@
 @Metadata.layer: #CORE
 
-@Search.searchable: true
 
 @UI.headerInfo: { typeName:       'Travel',
                   typeNamePlural: 'Travels',
@@ -11,7 +10,7 @@ annotate view Z_C_ATRAVEL_LOG_JRC
     with
 
 {
-  @Search.defaultSearchElement: true
+  
   @UI.facet: [ { id:       'Travel',
                  purpose:  #STANDARD,
                  type:     #IDENTIFICATION_REFERENCE,
@@ -28,18 +27,15 @@ annotate view Z_C_ATRAVEL_LOG_JRC
                     importance: #HIGH } ]
   TravelID;
 
-  @Consumption.valueHelpDefinition: [ { entity: { name:    '/DMO/I_Agency',
-                                                  element: 'AgencyID' } } ]
-  @Search.defaultSearchElement: true
+  
   @UI.identification: [ { position: 20 } ]
   @UI.lineItem: [ { position:   20,
                     importance: #HIGH } ]
   @UI.selectionField: [ { position: 20 } ]
   AgencyID;
 
-  @Consumption.valueHelpDefinition: [ { entity: { name:    '/DMO/I_Customer',
-                                                  element: 'CustomerID' } } ]
-  @Search.defaultSearchElement: true
+  
+  
   @UI.identification: [ { position: 30 } ]
   @UI.lineItem: [ { position:   30,
                     importance: #HIGH } ]
@@ -63,11 +59,11 @@ annotate view Z_C_ATRAVEL_LOG_JRC
                     importance: #MEDIUM } ]
   TotalPrice;
 
-  @Consumption.valueHelpDefinition: [ { entity: { name:    'I_Currency',
-                                                  element: 'Currency' } } ]
-  CurrencyCode;
+//  @Consumption.valueHelpDefinition: [ { entity: { name:    'I_Currency',
+//                                                  element: 'Currency' } } ]
+//  CurrencyCode;
 
-  @EndUserText.label: 'Overall Status'
+  
   @UI.identification: [ { position: 15 },
                         { type:       #FOR_ACTION,
                           dataAction: 'acceptTravel',
