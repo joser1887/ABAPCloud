@@ -1,0 +1,6 @@
+CLASS zbp_i_travel_log_jrc DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF z_i_travel_log_jrc.
+ENDCLASS.
+
+
+CLASS zbp_i_travel_log_jrc IMPLEMENTATION.
+ENDCLASS.

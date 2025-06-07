@@ -1,5 +1,5 @@
 @AbapCatalog.compiler.compareFilter: true
-@AbapCatalog.preserveKey: true
+//@AbapCatalog.preserveKey: true
 @AbapCatalog.sqlViewName: 'ZV_BOOKSUPPL_JRC'
 
 @AccessControl.authorizationCheck: #NOT_REQUIRED
@@ -12,32 +12,33 @@ define view Z_I_BOOKSUPPL_LOG_JRC
   as select from zbooksupp_logjrc as BookingSupplement
 
   association to parent Z_I_BOOKING_LOG_JRC   as _Booking
-    on  $projection.TravelId  = _Booking.TravelId
-    and $projection.BookingId = _Booking.BookingId
+    on  $projection.travel_id  = _Booking.travel_id
+    and $projection.booking_id = _Booking.booking_id
 
   association [1..1] to Z_I_TRAVEL_LOG_JRC    as _Travel
-    on $projection.TravelId = _Travel.TravelId
+    on $projection.travel_id = _Travel.travel_id
 
   association [1..1] to /DMO/I_Supplement     as _Product
-    on $projection.SupplementId = _Product.SupplementID
+    on $projection.supplement_id = _Product.SupplementID
 
   association [1..*] to /DMO/I_SupplementText as _SupplementText
-    on $projection.SupplementId = _SupplementText.SupplementID
+    on $projection.supplement_id = _SupplementText.SupplementID
 
 {
-  key travel_id             as TravelId,
-  key booking_id            as BookingId,
-  key booking_supplement_id as BookingSupplementId,
+  key travel_id,
+  key booking_id,
+  key booking_supplement_id,
 
-      supplement_id         as SupplementId,
+      supplement_id,
 
       @Semantics.amount.currencyCode: 'currency'
-      price                 as Price,
+      price,
 
       @Semantics.currencyCode: true
-      currency              as Currency,
+      currency,
 
-      last_changed_at       as LastChangedAt,
+      @Semantics.systemDateTime.lastChangedAt: true
+      _Travel.last_changed_at,
 
       _Booking,
       _Travel,

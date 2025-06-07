@@ -8,28 +8,27 @@ define view entity Z_c_BOOKING_LOG_JRC
   as projection on Z_I_BOOKING_LOG_JRC
 
 {
-  key TravelId      as TravelId,
-  key BookingId     as BookingId,
+  key travel_id      as TravelID,
+  key booking_id     as BookingID,
 
-      BookingDate   as BookingDate,
-      CustomerId    as CustomerId,
+      booking_date   as BookingDate,
+      customer_id    as CustomerID,
 
       @ObjectModel.text.element: [ 'CarrierName' ]
-      CarrierId     as CarrierId,
+      carrier_id     as CarrierID,
 
-      _Carrier.Name as CarrierName,
-      ConnectionId  as ConnectionId,
-      FlightDate    as FlightDate,
+      _Carrier.Name  as CarrierName,
+      connection_id  as ConnectionID,
+      flight_date    as FlightDate,
 
       @Semantics.amount.currencyCode: 'CurrencyCode'
-      FlightPrice   as FlightPrice,
+      flight_price   as FlightPrice,
 
       @Semantics.currencyCode: true
-      CurrencyCode  as CurrencyCode,
+      currency_code  as CurrencyCode,
 
-      BookingStatus as BookingStatus,
-      LastChangeAt  as LastChangeAt,
-
+      booking_status as BookingStatus,
+      last_change_at as LastChangedAt,
       /* Associations */
       _Travel : redirected to parent Z_C_TRAVEL_LOG_jrc,
       _BookingSupplement : redirected to composition child Z_C_BOOKSUPPL_LOG_JRC,

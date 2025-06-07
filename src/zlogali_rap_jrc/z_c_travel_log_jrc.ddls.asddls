@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 
 @EndUserText.label: 'Consumption - Travel'
 
@@ -8,36 +8,36 @@ define root view entity Z_C_TRAVEL_LOG_jrc
   as projection on Z_I_TRAVEL_LOG_JRC
 
 {
-  key TravelId,
+  key travel_id          as TravelID,
 
       @ObjectModel.text.element: [ 'AgencyName' ]
-      AgencyId           as AgencyId,
+      agency_id          as AgencyID,
 
       _Agency.Name       as AgencyName,
 
       @ObjectModel.text.element: [ 'CustomerName' ]
-      CustomerId         as CustomerId,
+      customer_id        as CustomerID,
 
       _Customer.LastName as CustomerName,
-      BeginDate          as BeginDate,
-      EndDate            as EndDate,
+      begin_date         as BeginDate,
+      end_date           as EndDate,
 
       @Semantics.amount.currencyCode: 'CurrencyCode'
-      BookingFee         as BookingFee,
+      booking_fee        as BookingFee,
 
       @Semantics.amount.currencyCode: 'CurrencyCode'
-      TotalPrice         as TotalPrice,
+      total_price        as TotalPrice,
 
       @Semantics.currencyCode: true
-      CurrencyCode       as CurrencyCode,
+      currency_code      as CurrencyCode,
 
-      Description        as Description,
-      OverallStatus      as TravelStatus,
-      LastChangedAt      as LastChangedAt,
+      overall_status     as TravelStatus,
+      description        as Description,
+      last_changed_at    as LastChangedAt,
       /* Associations */
-      _Agency,
       _Booking : redirected to composition child Z_c_BOOKING_LOG_JRC,
 
+      _Agency,
       _Currency,
       _Customer
 }

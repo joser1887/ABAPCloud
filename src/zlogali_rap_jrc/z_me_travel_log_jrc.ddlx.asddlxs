@@ -5,7 +5,7 @@
 @UI.headerInfo: { typeName:       'Travel',
                   typeNamePlural: 'Travels',
                   title:          { type:  #STANDARD,
-                                    value: 'TravelId' } }
+                                    value: 'TravelID' } }
 
 annotate entity Z_C_TRAVEL_LOG_jrc with
 
@@ -23,18 +23,18 @@ annotate entity Z_C_TRAVEL_LOG_jrc with
                  position:      20,
                  targetElement: '_Booking' } ]
   @UI.identification: [ { position: 10,
-                          label:    'Travel ID [1,...99999999]' } ]
+                          label:    'Travel ID [1,...,99999999]' } ]
   @UI.lineItem: [ { position:   10,
                     importance: #HIGH } ]
-  TravelId;
+  TravelID;
 
   @Consumption.valueHelpDefinition: [ { entity: { name:    '/DMO/I_Agency',
-                                                  element: 'AgenciID' } } ]
+                                                  element: 'AgencyID' } } ]
+  @UI.identification: [ { position: 20 } ]
   @UI.lineItem: [ { position:   20,
                     importance: #HIGH } ]
-  @UI.identification: [ { position: 20 } ]
   @UI.selectionField: [ { position: 20 } ]
-  AgencyId;
+  AgencyID;
 
   @Consumption.valueHelpDefinition: [ { entity: { name:    '/DMO/I_Customer',
                                                   element: 'CustomerID' } } ]
@@ -43,7 +43,7 @@ annotate entity Z_C_TRAVEL_LOG_jrc with
   @UI.lineItem: [ { position:   30,
                     importance: #HIGH } ]
   @UI.selectionField: [ { position: 30 } ]
-  CustomerId;
+  CustomerID;
 
   @UI.identification: [ { position: 40 } ]
   @UI.lineItem: [ { position:   40,

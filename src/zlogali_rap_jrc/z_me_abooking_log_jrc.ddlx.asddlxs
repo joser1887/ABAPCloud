@@ -16,13 +16,13 @@ annotate entity Z_C_ABOOKING_LOG_JRC with
                  type:     #IDENTIFICATION_REFERENCE,
                  label:    'Booking',
                  position: 10 } ]
-  TravelId;
+  TravelID;
 
   @Search.defaultSearchElement: true
   @UI.identification: [ { position: 20 } ]
   @UI.lineItem: [ { position:   20,
                     importance: #HIGH } ]
-  BookingId;
+  BookingID;
 
   @UI.identification: [ { position: 30 } ]
   @UI.lineItem: [ { position:   30,
@@ -34,17 +34,17 @@ annotate entity Z_C_ABOOKING_LOG_JRC with
   @UI.lineItem: [ { position:   40,
                     importance: #HIGH } ]
   @UI.selectionField: [ { position: 10 } ]
-  CustomerId;
+  CustomerID;
 
   @UI.identification: [ { position: 50 } ]
   @UI.lineItem: [ { position:   50,
                     importance: #HIGH } ]
-  CarrierId;
+  CarrierID;
 
   @UI.identification: [ { position: 60 } ]
   @UI.lineItem: [ { position:   60,
                     importance: #HIGH } ]
-  ConnectionId;
+  ConnectionID;
 
   @UI.identification: [ { position: 70 } ]
   @UI.lineItem: [ { position:   70,
@@ -63,7 +63,6 @@ annotate entity Z_C_ABOOKING_LOG_JRC with
                     label:      'Status' } ]
   BookingStatus;
 
-  /* Admininstrative fields */
   @UI.hidden: true
-  LastChangeAt;
+  LastChangedAt;
 }

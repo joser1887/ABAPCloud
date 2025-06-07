@@ -5,7 +5,7 @@
 @UI.headerInfo: { typeName:       'Booking',
                   typeNamePlural: 'Bookings',
                   title:          { type:  #STANDARD,
-                                    value: 'BookingId' } }
+                                    value: 'BookingID' } }
 
 annotate view Z_c_BOOKING_LOG_JRC
     with
@@ -23,13 +23,13 @@ annotate view Z_c_BOOKING_LOG_JRC
                  label:         'Booking Supplement',
                  position:      20,
                  targetElement: '_BookingSupplement' } ]
-  TravelId;
+  TravelID;
 
   @Search.defaultSearchElement: true
   @UI.identification: [ { position: 20 } ]
   @UI.lineItem: [ { position:   20,
                     importance: #HIGH } ]
-  BookingId;
+  BookingID;
 
   @UI.identification: [ { position: 30 } ]
   @UI.lineItem: [ { position:   30,
@@ -42,14 +42,14 @@ annotate view Z_c_BOOKING_LOG_JRC
   @UI.identification: [ { position: 40 } ]
   @UI.lineItem: [ { position:   40,
                     importance: #HIGH } ]
-  CustomerId;
+  CustomerID;
 
   @Consumption.valueHelpDefinition: [ { entity: { name:    '/DMO/I_Carrier',
                                                   element: 'AirlineID' } } ]
   @UI.identification: [ { position: 50 } ]
   @UI.lineItem: [ { position:   50,
                     importance: #HIGH } ]
-  CarrierId;
+  CarrierID;
 
   @Consumption.valueHelpDefinition: [ { entity:            { name:    '/DMO/I_Flight',
                                                              element: 'ConnectionID' },
@@ -64,7 +64,7 @@ annotate view Z_c_BOOKING_LOG_JRC
   @UI.identification: [ { position: 60 } ]
   @UI.lineItem: [ { position:   60,
                     importance: #HIGH } ]
-  ConnectionId;
+  ConnectionID;
 
   @Consumption.valueHelpDefinition: [ { entity:            { name:    '/DMO/I_Flight',
                                                              element: 'FlightDate' },
@@ -98,5 +98,5 @@ annotate view Z_c_BOOKING_LOG_JRC
   BookingStatus;
 
   @UI.hidden: true
-  LastChangeAt;
+  LastChangedAt;
 }
