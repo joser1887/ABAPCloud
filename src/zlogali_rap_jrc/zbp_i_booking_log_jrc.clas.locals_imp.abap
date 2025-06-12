@@ -6,6 +6,8 @@ CLASS lhc_Booking DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS validateStatus FOR VALIDATE ON SAVE
       IMPORTING keys FOR Booking~validateStatus.
+    METHODS get_instance_features FOR INSTANCE FEATURES
+      IMPORTING keys REQUEST requested_features FOR Booking RESULT result.
 
 ENDCLASS.
 
@@ -37,6 +39,9 @@ CLASS lhc_Booking IMPLEMENTATION.
                  TO reported-booking.
       ENDCASE.
     ENDLOOP.
+  ENDMETHOD.
+
+  METHOD get_instance_features.
   ENDMETHOD.
 
 ENDCLASS.
