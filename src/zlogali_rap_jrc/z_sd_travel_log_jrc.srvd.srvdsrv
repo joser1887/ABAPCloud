@@ -1,0 +1,6 @@
+@EndUserText.label: 'Travel'
+define service Z_SD_TRAVEL_LOG_JRC {
+  expose Z_C_TRAVEL_LOG_jrc    as Travel;
+  expose Z_c_BOOKING_LOG_JRC   as Booking;
+  expose Z_C_BOOKSUPPL_LOG_JRC as BookingSupplement;
+}

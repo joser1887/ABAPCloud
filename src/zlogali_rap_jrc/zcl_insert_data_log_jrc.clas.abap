@@ -39,9 +39,13 @@ CLASS zcl_insert_data_log_jrc IMPLEMENTATION.
       WHERE travel_id  = @lt_booking-travel_id
         AND booking_id = @lt_booking-booking_id
       INTO CORRESPONDING FIELDS OF TABLE @lt_book_sup.
-    DELETE FROM ztravel_log.
-    DELETE FROM zbooking_log.
-    DELETE FROM zbooksuppl_log.
+    DELETE FROM ztravel_log_jrc.
+    DELETE FROM zbooking_log_jrc.
+    DELETE FROM zbooksupp_logjrc.
+    DELETE FROM ztravel_log_jrcd.
+    DELETE FROM zbooking_log_jrd.
+    DELETE FROM zbooksupp_logjrd.
+    DELETE FROM zlog_log_jrc.
     INSERT: ztravel_log_jrc FROM TABLE @lt_travel,
     zbooking_log_jrc FROM TABLE @lt_booking,
     zbooksupp_logjrc FROM TABLE @lt_book_sup.

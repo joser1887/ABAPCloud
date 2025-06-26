@@ -77,4 +77,8 @@ annotate entity Z_C_TRAVEL_LOG_jrc with
 
   @UI.hidden: true
   LastChangedAt;
+  
+  @UI.lineItem: [ { position:   60,
+                    importance: #HIGH } ]
+  DiscountPrice;
 }

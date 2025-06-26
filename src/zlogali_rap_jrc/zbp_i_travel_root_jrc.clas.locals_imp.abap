@@ -1,0 +1,18 @@
+CLASS lsc_Z_I_TRAVEL_LOG_JRC DEFINITION INHERITING FROM cl_abap_behavior_saver.
+  PROTECTED SECTION.
+
+    METHODS save_modified REDEFINITION.
+
+    METHODS cleanup_finalize REDEFINITION.
+
+ENDCLASS.
+
+CLASS lsc_Z_I_TRAVEL_LOG_JRC IMPLEMENTATION.
+
+  METHOD save_modified.
+  ENDMETHOD.
+
+  METHOD cleanup_finalize.
+  ENDMETHOD.
+
+ENDCLASS.

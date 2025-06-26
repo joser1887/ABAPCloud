@@ -1,74 +1,212 @@
-managed;
-//strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+managed implementation in class zbp_I_travel_log_jrc unique;
+strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+with draft;
 
 define behavior for Z_I_TRAVEL_LOG_JRC alias Travel
-implementation in class ZBP_I_TRAVEL_LOG_JRC unique
+implementation in class zbp_I_travel_log_jrc unique
 persistent table ztravel_log_jrc
+draft table ztravel_log_jrcd
 lock master
-authorization master ( instance )
+total etag last_changed_at
 etag master last_changed_at
+with additional save
+authorization master ( instance, global )
 {
-  // administrative fields: read only
-  field ( readonly ) last_changed_at, last_changed_by, created_at, created_by;
-  // mandatory fields that are required to create a travel
-  field ( mandatory : create ) travel_id, agency_id, overall_status, booking_fee, currency_code;
-  // dynamic field control
-  field ( features : instance ) travel_id, overall_status;
-  create;
-  update;
+  create ( precheck );
+  update ( precheck );
   delete;
+  association _Booking { create ( features : instance, authorization : update ); with draft; }
+  // administrative fields: read only
+  field ( readonly ) travel_id, overall_status, total_price, last_changed_at, last_changed_by, created_at, created_by;
+  // mandatory fields that are required to create a travel
+  field ( mandatory :create ) customer_id, currency_code, agency_id, begin_date, end_date;
+  // dynamic field control
+  field ( features : instance ) booking_fee;
+  //actions
+  action ( features : instance, authorization : instance ) acceptTravel result [1] $self;
+  action ( features : instance, authorization : instance ) rejectTravel result [1] $self;
+  action ( features : instance, authorization : instance ) deductDiscount parameter Z_A_DISCOUNT_JRC result [1] $self;
+  action ( authorization : instance ) createTravelByTemplate result [1] $self;
+  internal action reCalTotalPrice;
+  // Determination
+  determination setTravelNumber on save { create; }
+  determination setStatusToOpen on modify { create; }
+  determination calculateTotalPrice on modify { create; field booking_fee, currency_code; }
   // validations
   validation validateCustomer on save { create; field customer_id; }
+  validation validateAgency on save { create; field agency_id; }
   validation validateDates on save { create; field begin_date, end_date; }
+  validation validateCurrency on save { create; field currency_code; }
+  validation validateBookingFee on save { create; field booking_fee; }
   validation validateStatus on save { create; field overall_status; }
-  //actions
-  action ( features : instance ) acceptTravel result [1] $self;
-  action ( features : instance ) rejectTravel result [1] $self;
-  action createTravelByTemplate result [1] $self;
-  association _Booking { create ( features : instance ); }
-  mapping for ztravel_log_jrc corresponding;
+
+  determine action validateCustomerID { validation validateCustomer; }
+  determine action validateAgencyID { validation validateAgency; }
+  determine action validateDatesRange { validation validateDates; }
+
+
+  side effects
+  {
+    field booking_fee affects field total_price;
+    determine action validateCustomerID executed on field customer_id affects messages;
+    determine action validateAgencyID executed on field agency_id affects messages;
+    determine action validateDatesRange executed on field begin_date, field end_date affects messages;
+  }
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume with additional implementation;
+  draft determine action Prepare
+  {
+    validation validateCustomer;
+    validation validateAgency;
+    validation validateDates;
+    validation validateCurrency;
+    validation validateBookingFee;
+    validation validateStatus;
+
+    validation Booking~validateStatus;
+    validation Booking~validateCustomer;
+    validation Booking~validateConnection;
+    validation Booking~validateCurrency;
+    validation Booking~validateFlightPrices;
+
+    validation Supplement~validateSupplement;
+    validation Supplement~validateCurrency;
+    validation Supplement~validatePrice;
+
+
+
+  }
+
+
+
+  mapping for ztravel_log_jrc
+    {
+      travel_id       = travel_id;
+      agency_id       = agency_id;
+      customer_id     = customer_id;
+      begin_date      = begin_date;
+      end_date        = end_date;
+      booking_fee     = booking_fee;
+      total_price     = total_price;
+      currency_code   = currency_code;
+      description     = description;
+      overall_status  = overall_status;
+      created_by      = created_by;
+      created_at      = created_at;
+      last_changed_by = last_changed_by;
+      last_changed_at = last_changed_at;
+    }
 }
 
 define behavior for Z_I_BOOKING_LOG_JRC alias Booking
 implementation in class ZBP_I_BOOKING_LOG_JRC unique
 persistent table zbooking_log_jrc
+draft table zbooking_log_jrd
 lock dependent by _Travel
 authorization dependent by _Travel
 etag master last_change_at
 {
-  // static fields control
-  field ( readonly ) travel_id;
-  field ( mandatory : create ) booking_id, carrier_id, connection_id, flight_date, booking_status;
+
   update;
   delete;
+
+  association _BookingSupplement { create ( features : instance, authorization : update ); with draft; }
+  association _Travel { with draft; }
+
+  // static fields control
+  field ( readonly ) travel_id, booking_id, booking_date, last_change_at;
+  field ( mandatory ) customer_id, carrier_id, connection_id, flight_date, booking_status, flight_price, currency_code;
+
+  //determinations
+  determination setBookingNumber on save { create; }
+  determination setBookingDate on save { create; }
+  determination calculateTotalPrice on modify { field flight_price, currency_code; }
+  determination calculateTotalSupplimPrice on modify { field currency_code; }
+
   //validations
+  validation validateCustomer on save { create; field customer_id; }
   validation validateStatus on save
   { create; field booking_status; }
-  //determinations
-  determination calculateTotalFlightPrice on modify
-  { field flight_price, currency_code; }
-  association _BookingSupplement { create ( features : instance ); }
-  association _Travel { }
-  mapping for zbooking_log_jrc corresponding;
+  validation validateConnection on save { create; field carrier_id, connection_id, flight_date; }
+  validation validateCurrency on save { create; field currency_code; }
+  validation validateFlightPrices on save { create; field flight_price, currency_code; }
+
+  determine action validateFlightCost { validation validateFlightPrices; }
+
+  side effects
+  {
+    field flight_price affects field _Travel.total_price;
+    determine action validateFlightCost executed on field flight_price, field currency_code affects messages;
+  }
+  mapping for zbooking_log_jrc
+    {
+      travel_id      = travel_id;
+      booking_id     = booking_id;
+      booking_date   = booking_date;
+      customer_id    = customer_id;
+      carrier_id     = carrier_id;
+      connection_id  = connection_id;
+      flight_date    = flight_date;
+      flight_price   = flight_price;
+      currency_code  = currency_code;
+      booking_status = booking_status;
+      last_change_at = last_change_at;
+    }
+  //   corresponding;
 }
 
 define behavior for Z_I_BOOKSUPPL_LOG_JRC alias Supplement
 implementation in class ZBP_I_BOOKSUPPL_LOG_JRC unique
+draft table zbooksupp_logjrd
+//persistent table zbooksupp_logjrc
 with unmanaged save
 lock dependent by _Travel
 authorization dependent by _Travel
 etag master last_changed_at
 {
-  // Static Field Control
-  field ( readonly ) travel_id, booking_id;
-  field ( mandatory ) supplement_id, price;
 
   update;
   delete;
-  //Determination
-  determination calculateTotalSupplPrice on modify { field price, currency; }
 
-  //  field ( readonly ) TravelId, BookingId, BookingSupplementId;
-  association _Travel;
-  mapping for zlog_log_jrc corresponding;
+  association _Travel { with draft; }
+  association _Booking { with draft; }
+
+  // Static Field Control
+  field ( readonly ) booking_supplement_id, travel_id, booking_id, last_changed_at;
+  field ( mandatory : create ) supplement_id, price, currency_code;
+
+  //Determination
+  determination setBookSupplNumber on modify { create; }
+  determination calculateTotalSupplPrice on modify { field price, currency_code; }
+
+  //Validaciones
+  validation validateSupplement on save { create; field supplement_id; }
+  validation validateCurrency on save { create; field currency_code; }
+  validation validatePrice on save { create; field price, currency_code; }
+
+  determine action validateSupplementPrice { validation validateSupplement; }
+  determine action validateCurrencyEfec { validation validateCurrency; }
+  determine action validatePriceEfec { validation validatePrice; }
+  side effects
+  {
+    field price affects field _Travel.total_price;
+    determine action validateSupplementPrice executed on field supplement_id affects messages;
+    determine action validateCurrencyEfec executed on field currency_code affects messages;
+    determine action validatePriceEfec executed on field price, field currency_code affects messages;
+  }
+
+  mapping for zbooksupp_logjrc
+    {
+      travel_id             = travel_id;
+      booking_id            = booking_id;
+      booking_supplement_id = booking_supplement_id;
+      supplement_id         = supplement_id;
+      price                 = price;
+      currency_code         = currency_code;
+      last_changed_at       = last_changed_at;
+    }
+  //  corresponding;
+
 }

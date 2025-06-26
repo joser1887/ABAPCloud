@@ -1,6 +1,4 @@
-@AbapCatalog.compiler.compareFilter: true
-//@AbapCatalog.preserveKey: true
-@AbapCatalog.sqlViewName: 'ZV_BOOKSUPPL_JRC'
+//@AbapCatalog.viewEnhancementCategory: [ #NONE ]
 
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 
@@ -8,7 +6,11 @@
 
 @Metadata.ignorePropagatedAnnotations: true
 
-define view Z_I_BOOKSUPPL_LOG_JRC
+//@ObjectModel.usageType: { serviceQuality: #X,
+//                          sizeCategory:   #S,
+//                          dataClass:      #MIXED }
+
+define view entity Z_I_BOOKSUPPL_LOG_JRC
   as select from zbooksupp_logjrc as BookingSupplement
 
   association to parent Z_I_BOOKING_LOG_JRC   as _Booking
@@ -31,11 +33,10 @@ define view Z_I_BOOKSUPPL_LOG_JRC
 
       supplement_id,
 
-      @Semantics.amount.currencyCode: 'currency'
+      @Semantics.amount.currencyCode: 'currency_code'
       price,
 
-      @Semantics.currencyCode: true
-      currency,
+      currency_code,
 
       @Semantics.systemDateTime.lastChangedAt: true
       _Travel.last_changed_at,

@@ -1,18 +1,20 @@
-@AbapCatalog.compiler.compareFilter: true
-//@AbapCatalog.preserveKey: false
-@AbapCatalog.sqlViewName: 'ZVTRAVEL_JRC'
+//@AbapCatalog.viewEnhancementCategory: [ #NONE ]
 
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 
-@EndUserText.label: 'Interface - Travel'
+@EndUserText.label: 'Travel - Root Interface'
 
 @Metadata.ignorePropagatedAnnotations: true
 
-define root view Z_I_TRAVEL_LOG_JRC
+//@ObjectModel.usageType: { serviceQuality: #X,
+//                          sizeCategory:   #S,
+//                          dataClass:      #MIXED }
+
+define root view entity Z_I_TRAVEL_LOG_JRC
   as select from ztravel_log_jrc as Travel
 
   composition [0..*] of Z_I_BOOKING_LOG_JRC as _Booking
-  association [0..1] to /DMO/I_Agency       as _Agency on $projection.agency_id = _Agency.AgencyID
+  association [0..1] to /DMO/I_Agency       as _Agency   on $projection.agency_id = _Agency.AgencyID
   association [0..1] to /DMO/I_Customer     as _Customer on $projection.customer_id = _Customer.CustomerID
   association [0..1] to I_Currency          as _Currency on $projection.currency_code = _Currency.Currency
 
@@ -30,7 +32,6 @@ define root view Z_I_TRAVEL_LOG_JRC
       @Semantics.amount.currencyCode: 'currency_code'
       total_price,
 
-      @Semantics.currencyCode: true
       currency_code,
 
       description,
