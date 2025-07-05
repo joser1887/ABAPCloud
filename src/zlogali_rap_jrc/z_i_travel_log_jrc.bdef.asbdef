@@ -122,7 +122,7 @@ etag master last_change_at
   //determinations
   determination setBookingNumber on save { create; }
   determination setBookingDate on save { create; }
-  determination calculateTotalPrice on modify { field flight_price, currency_code; }
+  determination calculateTotalPrice on modify { create; field flight_price, currency_code; }
   determination calculateTotalSupplimPrice on modify { field currency_code; }
 
   //validations
@@ -179,7 +179,7 @@ etag master last_changed_at
 
   //Determination
   determination setBookSupplNumber on modify { create; }
-  determination calculateTotalSupplPrice on modify { field price, currency_code; }
+  determination calculateTotalSupplPrice on modify { create; field price, currency_code; }
 
   //Validaciones
   validation validateSupplement on save { create; field supplement_id; }
